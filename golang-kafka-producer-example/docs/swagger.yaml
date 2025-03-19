@@ -1,0 +1,96 @@
+basePath: /
+definitions:
+  dto.CreatePostsDTO:
+    properties:
+      posts:
+        items:
+          type: string
+        type: array
+    type: object
+  dto.ErrorDTO:
+    properties:
+      message:
+        type: string
+      statusCode:
+        type: integer
+    type: object
+  dto.Posts:
+    properties:
+      deletedAt:
+        type: string
+      message:
+        type: string
+      readAt:
+        type: string
+    type: object
+  dto.QueryPostsDTO:
+    properties:
+      posts:
+        items:
+          $ref: '#/definitions/dto.Posts'
+        type: array
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: diegocordeiro.contatos@gmail.com
+    name: Diego Cordeiro
+    url: https://github.com/DiegoJCordeiro/golang-with-kafka-study
+  description: API to produce a event kafka
+  license:
+    name: Diego Cordeiro License
+    url: https://github.com/DiegoJCordeiro/golang-with-kafka-study/blob/main/LICENSE
+  termsOfService: http://swagger.io/terms/
+  title: Producer Kafka - Studies
+  version: "1.0"
+paths:
+  /v1/posts:
+    get:
+      consumes:
+      - application/json
+      description: This endpoint is used to query all posts.
+      parameters:
+      - description: limit of data
+        in: query
+        name: limit
+        type: integer
+      - description: offset of data
+        in: query
+        name: offset
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.QueryPostsDTO'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorDTO'
+      summary: Query all posts
+      tags:
+      - Posts
+    post:
+      consumes:
+      - application/json
+      description: This endpoint is used to create some posts.
+      parameters:
+      - description: CreatePostsDTO Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreatePostsDTO'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CreatePostsDTO'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorDTO'
+      summary: Create a posts
+      tags:
+      - Posts
+swagger: "2.0"

@@ -1,0 +1,146 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API to produce a event kafka",
+        "title": "Producer Kafka - Studies",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Diego Cordeiro",
+            "url": "https://github.com/DiegoJCordeiro/golang-with-kafka-study",
+            "email": "diegocordeiro.contatos@gmail.com"
+        },
+        "license": {
+            "name": "Diego Cordeiro License",
+            "url": "https://github.com/DiegoJCordeiro/golang-with-kafka-study/blob/main/LICENSE"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/v1/posts": {
+            "get": {
+                "description": "This endpoint is used to query all posts.",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Query all posts",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "limit of data",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "offset of data",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.QueryPostsDTO"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorDTO"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "This endpoint is used to create some posts.",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Create a posts",
+                "parameters": [
+                    {
+                        "description": "CreatePostsDTO Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreatePostsDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreatePostsDTO"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorDTO"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.CreatePostsDTO": {
+            "type": "object",
+            "properties": {
+                "posts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "dto.ErrorDTO": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "statusCode": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.Posts": {
+            "type": "object",
+            "properties": {
+                "deletedAt": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "readAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.QueryPostsDTO": {
+            "type": "object",
+            "properties": {
+                "posts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Posts"
+                    }
+                }
+            }
+        }
+    }
+}
